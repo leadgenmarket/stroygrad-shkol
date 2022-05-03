@@ -17,7 +17,7 @@ export const Header = () => {
 
     return (
         <React.Fragment>
-            <section className="header plr">
+            <section className="header">
                 <div className="wmain">
                     <div className="head_plashka">
                         <div className="head_plashka__inner">

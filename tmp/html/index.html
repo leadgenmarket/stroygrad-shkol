@@ -98,7 +98,7 @@
 	<!-- begin contact -->
 	<div class="contact">
     	<div class="tm">Контакты</div>
-    	<div class="contact__center">
+    	<div class="contact__center plr">
 	    	<ul class="contact__info">
 	    		<li>
 	    			<img src="img/cont_ico1.png">
@@ -289,7 +289,7 @@
 	var swiper = new Swiper('.plans__slider', {
 		speed: 300,
 		slidesPerView: "auto",
-		spaceBetween: 32,
+		spaceBetween: 20,
 		loop: false,
 		autoHeight: true,
 		pagination: {
@@ -300,12 +300,11 @@
 			nextEl: '.swiper-button-next',
 			prevEl: '.swiper-button-prev',
 		},
-		// breakpoints: {
-		// 	640: {
-		// 		slidesPerView: 2,
-		// 		spaceBetween: 20,
-		// 	},
-		// }
+		breakpoints: {
+			440: {
+				spaceBetween: 32,
+			},
+		}
 	});
 	var swiper = new Swiper('.photogall__slider', {
 		speed: 400,

@@ -1,4 +1,5 @@
 import { Modal, ModalBody } from "reactstrap";
+import { PhoneInput } from "./phone_input";
 const parse = require('html-react-parser');
 
 export const ModalC = ({title, flat, fields, celtype, btnTitle, close}) => {
@@ -51,6 +52,9 @@ export const ModalC = ({title, flat, fields, celtype, btnTitle, close}) => {
                                   <i><img alt="..." src={field.icon} /></i>
                                 </label>
                         default:
+                          if (field.name === "phone") {
+                            return <PhoneInput />
+                          }
                           return <label className="in_style">
                                     <input type="text" name={field.name} placeholder={field.placeholder} />
                                     <i><img alt="..." src={field.icon} /></i>
@@ -89,7 +93,6 @@ export const ModalC = ({title, flat, fields, celtype, btnTitle, close}) => {
                 <form className="pu_form">
                   {fields.map((field)=>{
                     switch (field.type){
-                      
                       case "area":
                         return <label class="in_style">
                                   <textarea placeholder={field.placeholder}></textarea>

@@ -96,7 +96,7 @@ export const HodStr = () => {
             case '11':
                 name = "Ноябрь"
                 break
-            case '12':
+            default:
                 name = "Декабрь"
                 break
         }

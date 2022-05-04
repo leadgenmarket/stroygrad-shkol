@@ -3,20 +3,22 @@ import { useState } from "react";
 export const PhoneInput = () => {
     const [phone, setPhone] = useState("")
     const phoneChange = (e) => {
+        
         let lastVal = phone;
         let value = e.target.value;
+        
         setPhone(value)
         if (value.length < lastVal.length && value.length < 5) {
             setPhone('');
         }
 
         if (value.length === 1) {
-            if (value === 8) {
+            if (parseInt(value) === 8) {
                 setPhone('+7 (');
-            } else if (value === 9) {
+            } else if (parseInt(value) === 9) {
                 setPhone('+7 (9');
 
-            } else if (value === 7) {
+            } else if (parseInt(value) === 7) {
                 setPhone('+7 (');
             } else {
                 setPhone('');
@@ -60,7 +62,7 @@ export const PhoneInput = () => {
         }
     }
     return ( <label class="in_style">
-        <input class="in_phone" type="text" onChange={phoneChange} value={phone} placeholder="Ваш телефон" />
+        <input class="in_phone" type="text" name="phone" onChange={phoneChange} value={phone} placeholder="Ваш телефон" />
         <i><img src="img/in_phone.png" alt="..." /></i>
       </label>)
 }

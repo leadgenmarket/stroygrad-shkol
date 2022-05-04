@@ -14,12 +14,13 @@ const Excursion = () => {
 		    		Запишитесь на экскурссию
 		    		<span>в ЖК "На Школьной", прямо сейчас</span>
 		    	</div>
-		    	<a className="btn_main" onClick={(e) => { e.preventDefault(); setModalState(true)}} href="#">Записаться на просмотр</a>
+		    	<a className="btn_main" onClick={(e) => { e.preventDefault(); setModalState(window.pageYOffset)}} href="#">Записаться на просмотр</a>
 	    	</div>
 	    </div>
 	</section>
-  {isOpen?<ModalC 
+  {isOpen!==null?<ModalC 
       title={"Запишитесь <br><span>на экскурсию</span>"}
+      position={isOpen}
       fields={[
         {
           type:"text",
@@ -38,7 +39,7 @@ const Excursion = () => {
       ]}
       btnTitle={"Записаться"}
       celtype={"getExcursion"}
-      close = {()=>{setModalState(false)}}
+      close = {()=>{setModalState(null)}}
   />:<div></div>}
   </React.Fragment>
   )

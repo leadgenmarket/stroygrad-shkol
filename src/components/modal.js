@@ -1,8 +1,43 @@
+import { useEffect, useState } from "react";
 import { Modal, ModalBody } from "reactstrap";
+import { useSendForm } from "../hooks/send-from.hook";
 import { PhoneInput } from "./phone_input";
 const parse = require('html-react-parser');
 
-export const ModalC = ({title, flat, fields, celtype, btnTitle, close}) => {
+export const ModalC = ({title, position, hidden, flat, fields, celtype, btnTitle, success, close}) => {
+  const sendForm = useSendForm()
+  const [successShow, setSuccessShow] = useState(false)
+  const successCallback = () => {
+    setSuccessShow(true)
+  }
+  useEffect(()=>{
+    setTimeout(()=>{
+      window.scrollTo({
+        top: position,
+      });
+    },0)
+  },[])
+  
+  if (success || successShow) {
+    return <Modal isOpen={true} toggle={() => {setModalState(null)}}>
+      <ModalBody>
+        <div className="pu_main plr">
+          <div className="pu_table">
+            <div className="pu_cell">
+              <div class="pu_inner pu_ok" style={{display:"block"}}>
+                <div className="closeform" onClick={() => close()}><img alt="..." src="img/closeform.png" /></div>
+                <div class="pu_title">
+                  Спасибо
+                  <i>в ближайшее время с Вами свяжется наш специалист</i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ModalBody>
+    </Modal>
+  }
+
   if (flat) {
     const kvTitle = (classKv) => {
         switch (classKv) {
@@ -16,6 +51,7 @@ export const ModalC = ({title, flat, fields, celtype, btnTitle, close}) => {
               return "Однокомнатная квартира"
         }
     }
+    
     return  (
       <Modal isOpen={true} toggle={() => {setModalState(null)}}>
         <ModalBody>
@@ -38,12 +74,12 @@ export const ModalC = ({title, flat, fields, celtype, btnTitle, close}) => {
                       switch (field.type){
                         case "area":
                           return <label class="in_style">
-                                    <textarea placeholder={field.placeholder}></textarea>
+                                    <textarea className="dop-info" placeholder={field.placeholder} data={field.placeholder}></textarea>
                                     <i><img alt="..." src={field.icon} /></i>
                                   </label>
                         case "select":
                           return <label class="in_style in_select">
-                                  <select>
+                                  <select className="dop-select" data={field.placeholder}>
                                     <option>{field.placeholder}</option>
                                     {field.options.map((option)=>{
                                       return <option>{option}</option>
@@ -63,7 +99,7 @@ export const ModalC = ({title, flat, fields, celtype, btnTitle, close}) => {
                     })}
                     <input type="hidden" className="text" value={`Узнать стоимость квартиры ${flat.rooms}-комнатная, общая площадь - ${flat.total_area}, жилая площадь - ${flat.living_area}`} />
                     <div className="align_center">
-                      <button className="btn_main" celtype={celtype} onClick={() => sendform.sendForm()}>{btnTitle}</button>
+                      <button className="btn_main" celtype={celtype} onClick={(e) => sendForm.sendForm(e, successCallback)}>{btnTitle}</button>
                     </div>
                     </form>
                   </div>
@@ -79,6 +115,7 @@ export const ModalC = ({title, flat, fields, celtype, btnTitle, close}) => {
       </Modal>
     )
   }
+  
   return (
     <Modal isOpen={true} toggle={() => {setModalState(null)}}>
       <ModalBody>
@@ -95,12 +132,12 @@ export const ModalC = ({title, flat, fields, celtype, btnTitle, close}) => {
                     switch (field.type){
                       case "area":
                         return <label class="in_style">
-                                  <textarea placeholder={field.placeholder}></textarea>
+                                  <textarea className="dop-info" data={field.placeholder} placeholder={field.placeholder}></textarea>
                                   <i><img alt="..." src={field.icon} /></i>
                                 </label>
                       case "select":
                         return <label class="in_style in_select">
-                                <select>
+                                <select className="dop-select" data={field.placeholder}>
                                   <option>{field.placeholder}</option>
                                   {field.options.map((option)=>{
                                     return <option>{option}</option>
@@ -109,14 +146,18 @@ export const ModalC = ({title, flat, fields, celtype, btnTitle, close}) => {
                                 <i><img alt="..." src={field.icon} /></i>
                               </label>
                       default:
+                        if (field.name === "phone") {
+                          return <PhoneInput />
+                        }
                         return <label className="in_style">
                                   <input type="text" name={field.name} placeholder={field.placeholder} />
                                   <i><img alt="..." src={field.icon} /></i>
                                 </label>
                     }
                   })}
+                  <input type="hidden" className="text" value={hidden} />
                   <div className="align_center">
-                    <button className="btn_main" celtype={celtype} onClick={() => sendform.sendForm()}>{btnTitle}</button>
+                    <button className="btn_main" celtype={celtype} onClick={(e) => sendForm.sendForm(e, successCallback)}>{btnTitle}</button>
                   </div>
                 </form>
               </div>

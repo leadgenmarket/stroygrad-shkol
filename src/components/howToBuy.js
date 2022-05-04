@@ -37,6 +37,7 @@ export const HowToBuy = () => {
     },
   ]
 
+
   return (<React.Fragment>
           <section className="buy plr">
             <div className="wmain">
@@ -89,20 +90,25 @@ export const HowToBuy = () => {
           {
             0: <ModalC
                   title={"Получите расчет<i>ежемесячного платежа по ипотеке</i>"}
+                  position={window.pageYOffset}
                   fields={modalFields}
                   btnTitle={"получить расчет"}
                   celtype={"getExcursion"}
+                  hidden={"Получить консультацию по ипотеке"}
                   close = {()=>{setModalType(-1)}}
                 />,
             1: <ModalC
                   title={"Получите расчет<i>ежемесячного платежа по рассрочке</i>"}
                   fields={modalFields}
+                  position={window.pageYOffset}
                   btnTitle={"получить расчет"}
                   celtype={"getRassr"}
+                  hidden={"Получить консультацию по рассрочке"}
                   close = {()=>{setModalType(-1)}}
                 />,
             2: <ModalC
                 title={"Материнский капитал"}
+                position={window.pageYOffset}
                 fields={[
                   {
                     type:"text",
@@ -119,14 +125,17 @@ export const HowToBuy = () => {
                     icon: "img/in_phone.png",
                   },
                 ]}
+                hidden={"Получить консультацию по материнскому капиталу"}
                 btnTitle={"Узнать подробнее"}
                 celtype={"getMatKap"}
                 close = {()=>{setModalType(-1)}}
               />,
             3: <ModalC
               title={"Получите расчет<i>ежемесячного платежа по военной ипотеке</i>"}
+              position={window.pageYOffset}
               fields={modalFields}
               btnTitle={"получить расчет"}
+              hidden={"Получить расчет по военной ипотеке"}
               celtype={"getVoenIpot"}
               close = {()=>{setModalType(-1)}}
             />,

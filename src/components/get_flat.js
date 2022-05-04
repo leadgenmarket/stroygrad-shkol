@@ -1,16 +1,26 @@
 import Slider from '@material-ui/core/Slider';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { PhoneInput } from './phone_input';
+import { useSendForm } from '../hooks/send-from.hook';
+import ModalC from './modal';
 
 const GetFlat = () => {
 	const [floor, setFloor] = useState(14);
 	const [type, setType] = useState(1)
+	const [success, setSuccess] = useState(false)
 	const handleChange = (event, newValue) => {
 		setFloor(newValue);
 	};
+	const sendform = useSendForm()
+	
+	const successCallback = () => {
+		setSuccess(window.pageYOffset)
+	} 
 
-  return ( <section class="get_flat plr">
+
+  return ( <React.Fragment>
+	  <section class="get_flat plr">
 	    <div class="wmain">
 	    	<div class="get_flat_l">
 		    	<div class="tm">
@@ -42,17 +52,23 @@ const GetFlat = () => {
 			    	</div>
 			    	<div class="gff__inner">
 			    		<label class="in_style">
-			    			<input type="text" placeholder="Ваше имя" />
+			    			<input type="text" name="name" placeholder="Ваше имя" />
 			    			<i><img src="img/in_name.png" /></i>
 			    		</label>
 			    		<PhoneInput />
-							<input type="hidden" className="text" value={`Получить подборку ${type}-комнатная, этаж - ${floor}`} />
-			    		<button class="btn_main" celtype={"getPodbor"}>Получить подборку</button>
+						<input type="hidden" className="text" value={`Получить подборку ${type}-комнатная, этаж - ${floor}`} />
+			    		<button class="btn_main" celtype={"getPodbor"} onClick={(e) => {sendform.sendForm(e, successCallback)}}>Получить подборку</button>
 			    	</div>
 	    		</form>
 	    	</div>
 	    </div>
 	</section>
+	{success?<ModalC 
+            success={success}
+            position={success}
+            close = {()=>{setSuccess(false)}}
+        />:<div></div>}
+	  </React.Fragment>
   )
 }
 

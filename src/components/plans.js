@@ -81,7 +81,7 @@ export const Plans = () => {
                     >
                         {flats.map((flat) => {
                             if ((type === "all" || flat.rooms === type)) { //&& checkFloorsInRange(flat.floors)
-                                return <SwiperSlide onClick={(e) => { e.preventDefault(); setPopupFlat(flat); setModalState(true)}} key={flat.ID}>
+                                return <SwiperSlide onClick={(e) => { e.preventDefault(); setPopupFlat(flat); setModalState(window.pageYOffset)}} key={flat.ID}>
                                     <div className="plans__slide">
                                         <div className="plans__slide_title">{kvTitle(flat.rooms)}</div>
                                         <div className="plans__slide_img"><img src={process.env.REACT_APP_PLANS_URL + flat.photo} alt="..."/></div>
@@ -111,6 +111,7 @@ export const Plans = () => {
             </section>
         {isOpen?<ModalC 
             title={"Запишитесь <br><span>на экскурсию</span>"}
+            position={isOpen}
             flat={flatPopup}
             fields={[
                 {
@@ -130,7 +131,7 @@ export const Plans = () => {
             ]}
             btnTitle={"Узнать стоимость"}
             celtype={"getFlatCoast"}
-            close = {()=>{setModalState(false)}}
+            close = {()=>{setModalState(null)}}
         />:<div></div>}
         </React.Fragment>
     )

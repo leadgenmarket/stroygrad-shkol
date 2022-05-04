@@ -1,9 +1,9 @@
 export const useSendForm = () => {
     const addError = (element) => {
-        element.closest('.form_item').querySelector('input').classList.add('err')
+        element.classList.add('err')
     }
     const removeError = (element) => {
-        element.closest('.form_item').querySelector('input').classList.remove('err')
+        element.classList.remove('err')
     }
     const checkPhone = (element) => {
         if (element.value.indexOf('_') !== -1 || element.value.length !== 18) {
@@ -85,7 +85,7 @@ export const useSendForm = () => {
             });
     }
 
-    const sendForm = (e) => {
+    const sendForm = (e, callback) => {
         e.preventDefault()
         let flag = true
         let form = e.target.closest('form')
@@ -94,7 +94,7 @@ export const useSendForm = () => {
         let phone = form.querySelector('input[name="phone"]').value
         let url = window.location.toString().split("?")
         let email
-        if (form.querySelector('input[name="email"]') !== undefined) {
+        if (form.querySelector('input[name="email"]') !== null) {
             email = form.querySelector('input[name="email"]').value
         }
         let utm = null
@@ -129,6 +129,10 @@ export const useSendForm = () => {
             if (el.value.length !== 0)
                 text += '; ' + el.value
         })
+        form.querySelectorAll('.dop-select').forEach((el) => {
+            if (el.value.length !== 0 && el.getAttribute('data')!== el.value)
+                text += '; ' + el.getAttribute('data') + ":" + el.value
+        })
 
         if (flag) {
             let senddata = { getCall: "Y", celtype: celtype, name: name, phone: phone, text: text, ...utm }
@@ -146,14 +150,13 @@ export const useSendForm = () => {
             document.querySelectorAll('.pu_inner').forEach((elem) => {
                 elem.style.display = "none"
             })
-            document.querySelector('.pu_rgba').style.display = "block"
-            document.querySelector('.pu_thx').style.display = "block"
+            callback()
             console.log(senddata)
-            /*fetch("fd_log/ajax.php", requestOptions)
+            fetch("fd_log/ajax.php", requestOptions)
                 .then(data => data.ok)
                 .then(response => {
                     showAlert(senddata, celtype)
-                });*/
+                });
         }
     }
     return { sendForm }

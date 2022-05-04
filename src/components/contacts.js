@@ -97,6 +97,7 @@ export const Contacts = () => {
                 }, 
             ]}
             btnTitle={"Задать вопрос"}
+            hidden={"Задать вопрос менеджеру"}
             celtype={"getQuestion"}
             close = {()=>{setModalState(false)}}
         />:<div></div>}

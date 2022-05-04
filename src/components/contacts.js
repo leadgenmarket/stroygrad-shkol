@@ -1,62 +1,105 @@
 import React, { useEffect, useState } from 'react'
 import { YMaps, Map, ZoomControl, Placemark } from 'react-yandex-maps';
+import { ModalC } from "./modal";
 
 export const Contacts = () => {
+    const [isOpen, setModalState] = useState(null)
     const [phone, setPhone] = useState("")
     useEffect(() => {
-        setPhone(document.querySelector('.roistat-phone').innerHTML)
+        try{
+            setPhone(document.querySelector('.roistat-phone').innerHTML)
+        } catch (e) {
+
+        }
     }, [])
 
     return (
-        <section className="contact">
-            <div className="contact__l">
-                <div id="page4" className="tm tt">Офис продаж <br />и контакты</div>
-                <ul className="cont_list">
-                    <li>
-                        Щелково,  Центральная ул. 71/1 <br />(дальний вход в магазин ДА)
-                    </li>
-                    <li>
-                        <a href={"tel:" + phone.replaceAll(" ", "").replaceAll("-", "").replaceAll("(", "").replaceAll(")", "") + "\""}><b>{phone}</b></a><br />
-                        <a href="#">info@sunny-park.ru</a>
-                    </li>
-                    <li>
-                        График работы:<br />
-                        Пн–Пт: 10:00 - 21:00<br />
-                        Сб–Вс: 10:00 - 20:00<br />
-                    </li>
-                </ul>
-                {/*<div className="soc_list">
-                    <a href="#"><img alt="..." src="img/soc_ico1.svg" /></a>
-                    <a href="#"><img alt="..." src="img/soc_ico2.svg" /></a>
-                    <a href="#"><img alt="..." src="img/soc_ico3.svg" /></a>
-                    <a href="#"><img alt="..." src="img/soc_ico4.svg" /></a>
-                </div>*/}
-            </div>
-            <div className="contact__r">
-                <div id="map">
-                    <YMaps>
-                        <div>
-                            <Map defaultState={{ center: [55.926217, 37.963064], zoom: 16, controls: [] }} style={{ width: "100%", height: "100%", position: "absolute" }}  >
-                                <ZoomControl options={{ float: 'left' }} />
-                                <Placemark geometry={[55.926217, 37.963064]}
-                                    options={{
-                                        iconLayout: 'default#image',
-                                        hideIconOnBalloonOpen: false,
-                                        iconImageSize: [50, 64],
-                                        iconImageOffset: [-25, -64],
-                                        cursor: 'default',
-                                        iconShadow: true,
-                                        balloonclose: true,
-                                        iconImageHref: 'img/cont_map_ico.svg',
-                                        balloonPanelMaxMapArea: 0,
-                                    }}
-                                />
-                            </Map>
-                        </div>
-                    </YMaps>
+        <React.Fragment>
+            <section className="contact">
+                <div className="tm">Контакты</div>
+                <div className="contact__center plr">
+                    <ul className="contact__info">
+                        <li>
+                            <img src="img/cont_ico1.png" />
+                            <span>
+                                г. Краснодар, <br />
+                                ул. Энтузиастов, 168/1
+                            </span>
+                        </li>
+                        <li>
+                            <img src="img/cont_ico2.png" />
+                            <span>
+                                <a href="tel:88001234567">8 (800) 123 45 67</a>
+                            </span>
+                        </li>
+                    </ul>
                 </div>
-            </div>
-
-        </section>
+                <div className="contact_map">
+                    <div id="map" style={{width: "100%", height: "100%"}}>
+                        <YMaps>
+                            <div>
+                                <Map defaultState={{ center: [45.03499674023101,39.019789697731], zoom: 14, controls: [] }} style={{ width: "100%", height: "100%", position: "absolute" }}  >
+                                    <ZoomControl options={{ float: 'left' }} />
+                                    <Placemark geometry={[45.03499674023101,39.019789697731]}
+                                        options={{
+                                            iconLayout: 'default#image',
+                                            hideIconOnBalloonOpen: false,
+                                            iconImageSize: [91, 98],
+                                            iconImageOffset: [-45, -78],
+                                            cursor: 'default',
+                                            iconShadow: true,
+                                            balloonclose: true,
+                                            iconImageHref: 'img/map_ico.png',
+                                        }}
+                                    />
+                                </Map>
+                            </div>
+                        </YMaps>
+                    </div>
+                    <div className="contact_map__bottom">
+                        <div className="cont_quest_title">
+                            Остались <span>вопросы?</span>
+                        </div>
+                        <a className="btn_main" href="#" onClick={(e) => { e.preventDefault(); setModalState(true)}}>Задайте их менеджеру</a>
+                    </div>
+                </div>
+            </section>
+            {isOpen?<ModalC 
+            title={"Задайте <span>вопрос</span>"}
+            fields={[
+                {
+                    type:"text",
+                    name: "name",
+                    placeholder: "Ваше имя",
+                    required: false,
+                    icon: "img/in_name.png",
+                },
+                {
+                    type:"text",
+                    name: "email",
+                    placeholder: "Ваш email",
+                    required: true,
+                    icon: "img/in_mail.png",
+                }, 
+                {
+                    type:"text",
+                    name: "phone",
+                    placeholder: "Ваш телефон",
+                    required: true,
+                    icon: "img/in_phone.png",
+                }, 
+                {
+                    type:"area",
+                    name: "question",
+                    placeholder: "Ваш вопрос",
+                    required: true,
+                    icon: "img/in_text.png",
+                }, 
+            ]}
+            btnTitle={"Задать вопрос"}
+            celtype={"getQuestion"}
+            close = {()=>{setModalState(false)}}
+        />:<div></div>}
+        </React.Fragment>
     )
 }

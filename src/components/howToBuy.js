@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import ModalC from "./modals/modal"
+import ModalC from "./modal"
 
 export const HowToBuy = () => {
   const [modalType, setModalType] = useState(-1)

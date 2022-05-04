@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import { ModalC } from "./modals/modal";
-import { useSendForm } from "../hooks/send-from.hook";
+import { ModalC } from "./modal";
 
 const Excursion = () => {
   const [isOpen, setModalState] = useState(null)
-  const sendform = useSendForm()
   return ( 
   <React.Fragment>
   <section className="excursion plr">
@@ -16,7 +14,7 @@ const Excursion = () => {
 		    		Запишитесь на экскурссию
 		    		<span>в ЖК "На Школьной", прямо сейчас</span>
 		    	</div>
-		    	<a className="btn_main" onClick={() => setModalState(true)} href="#">Записаться на просмотр</a>
+		    	<a className="btn_main" onClick={(e) => { e.preventDefault(); setModalState(true)}} href="#">Записаться на просмотр</a>
 	    	</div>
 	    </div>
 	</section>
@@ -32,24 +30,10 @@ const Excursion = () => {
         },
         {
           type:"text",
-          name: "email",
-          placeholder: "Ваш email",
-          required: true,
-          icon: "img/in_mail.png",
-        }, 
-        {
-          type:"text",
           name: "phone",
           placeholder: "Ваш телефон",
           required: true,
           icon: "img/in_phone.png",
-        }, 
-        {
-          type:"area",
-          name: "question",
-          placeholder: "Ваш вопрос",
-          required: true,
-          icon: "img/in_mail.png",
         }, 
       ]}
       btnTitle={"Записаться"}

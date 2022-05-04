@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState, useContext } from "react"
+import React, { Suspense, useEffect, useContext } from "react"
 import { BlocksContext } from "../context/blocksContext"
 import { Menu } from './menu';
 import { Header } from './header';
@@ -9,6 +9,10 @@ import Plans from "./plans";
 import HowToBuy from "./howToBuy";
 import Gallery from "./gallery";
 import GetFlat from "./get_flat";
+import HodStr from "./hod_str";
+import About from "./about";
+import { Contacts } from "./contacts";
+import Footer from "./footer";
 
 export const Loader = () => {
 
@@ -21,7 +25,11 @@ export const Loader = () => {
         <Plans />,
         <HowToBuy />,
         <Gallery />,
-        <GetFlat />
+        <GetFlat />,
+        <HodStr />,
+        <About />,
+        <Contacts />,
+        <Footer />
     ]
 
     const loaded = useContext(BlocksContext)

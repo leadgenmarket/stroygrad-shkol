@@ -1,6 +1,6 @@
 import "./css/style.css";
+import "./css/swiper.css"
 import { BlocksContext } from "./context/blocksContext"
-import { FlatsContext } from "./context/flatsContext"
 import { useBlocks } from "./hooks/blocks.hook"
 
 

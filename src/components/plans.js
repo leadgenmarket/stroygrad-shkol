@@ -1,67 +1,28 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Navigation, Pagination } from 'swiper'
+import { ModalC } from "./modal";
+import 'swiper/css';
 
 export const Plans = () => {
-    const [floors, setFloor] = useState([3, 15])
-    const [area, setArea] = useState([18, 140])
+    const [isOpen, setModalState] = useState(null)
     const [type, setType] = useState("all")
     const [flats, setFlats] = useState([])
-    const [flatsToShow, setFlatsToShow] = useState(3)
-   
-
-
-    const typeClick = (type) => {
-        setType(type)
-        setFlatsToShow(3)
-        filterFlats(flats, area, type, 3, floors)
-    }
-
-    const kvTitleFull = (classKv) => {
-        switch (classKv) {
-            case 0:
-                return "Cтудия"
-            case 1:
-                return "Однокомнатная"
-            case 2:
-                return "Двухкомнатная"
-            case 3:
-                return "Трехкомнатная"
-        }
-    }
-
-    const flatClick = (e) => {
-        e.preventDefault()
-        let id = e.currentTarget.getAttribute('id')
-        let flat
-        const headers = { 'Content-Type': 'application/json' }
-        fetch(process.env.REACT_APP_BACKEND_URL + "/flats.php?ID=" + id, headers)
-            .then(res => res.json())
-            .then((result) => {
-                flat = result
-                console.log(result)
-                document.querySelector('.pu_rgba').style.display = "block"
-                document.querySelectorAll('.pu_inner').forEach(el => {
-                    el.style.display = "none"
-                });
-                document.querySelector('.pu_flat').style.display = "block"
-                document.querySelector('body').classList.add('overflow')
-                document.querySelector('.pu_flat_content__r img').setAttribute('src', process.env.REACT_APP_PLANS_URL + flat.photo)
-                document.querySelector('.pu_flat #sq_all').innerHTML = flat.total_area + " м²"
-                document.querySelector('.pu_flat #sq_zhil').innerHTML = flat.living_area + " м²"
-                document.querySelector('.pu_flat .tm b').innerHTML = flat.class == "0" ? "Квартира-студия" : kvTitleFull(flat.rooms) + " квартира"
-                document.querySelector('.pu_flat .text').value = 'Узнать стоимость ' + kvTitle(flat.rooms) + "; Общая площадь: " + flat.total_area + "; Жилая площадь: " + flat.living_area
-            })
-    }
+    const [flatPopup, setPopupFlat] = useState()
+    const navigationPrevRef = useRef(null)
+    const navigationNextRef = useRef(null)
+    const paginationRef = useRef(null)
 
     const kvTitle = (classKv) => {
         switch (classKv) {
             case 0:
                 return "Студии"
-            case 1:
-                return "1-k квартира"
             case 2:
-                return "2-k квартира"
+                return "2 - комнатная квартира"
             case 3:
-                return "3-k квартира"
+                return "3 - комнатная квартира"
+            default:
+                return "1 - комнатная квартира" 
         }
     }
 
@@ -70,9 +31,9 @@ export const Plans = () => {
             .then(res => res.json())
             .then((result) => {
                 let flats = []
-				result.map((flat) => {
+				result.forEach((flat) => {
 					let floors = []
-					if (flat.floors != "") {
+					if (flat.floors !== "") {
 						let tmpFloor = flat.floors.split(',')
 						tmpFloor.forEach((fl)=>{
 							floors.push(parseInt(fl))
@@ -82,84 +43,97 @@ export const Plans = () => {
 					flats.push(flat)
 				})
 				setFlats(flats)
-                filterFlats(result, area, type, flatsToShow, floors)
             })
     }, [])
     return (
-        <section class="plans plr">
-            <div class="wmain">
-                <div class="plans__decor"><img alt="..." src="img/plans_decor.png" /></div>
-                <div class="tm">
-                    Планировки и <span>цены квартир</span>
+        <React.Fragment>
+            <section className="plans plr">
+                <div className="wmain">
+                    <div className="plans__decor"><img alt="..." src="img/plans_decor.png" /></div>
+                    <div className="tm">
+                        Планировки и <span>цены квартир</span>
+                    </div>
+                    <ul className="plans__nav">
+                        <li onClick={(e) => {setType("all")}} className={type === "all" ? "act" : ""}>Все</li>
+                        <li onClick={(e) => {setType(1)}} className={type === 1 ? "act" : ""}>1-ком</li>
+                        <li onClick={(e) => {setType(2)}} className={type === 2 ? "act" : ""}>2-ком</li>
+                        <li onClick={(e) => {setType(3)}} className={type === 3 ? "act" : ""}>3-ком</li>
+                    </ul>
+                    <Swiper className="plans__slider"
+                        modules={[Navigation, Pagination]}
+                        speed={300}
+                        slidesPerView={"auto"}
+                        spaceBetween={32}
+                        loop={false}
+                        autoHeight={true}
+                        navigation={{
+                            prevEl: navigationPrevRef.current,
+                            nextEl: navigationNextRef.current,
+                        }}
+                        pagination={{ 
+                            el: paginationRef.current, 
+                            clickable: true 
+                        }}
+                        onBeforeInit={(swiper) => {
+                            swiper.params.navigation.prevEl = navigationPrevRef.current;
+                            swiper.params.navigation.nextEl = navigationNextRef.current;
+                        }}
+                    >
+                        {flats.map((flat) => {
+                            if ((type === "all" || flat.rooms === type)) { //&& checkFloorsInRange(flat.floors)
+                                return <SwiperSlide onClick={(e) => { e.preventDefault(); setPopupFlat(flat); setModalState(true)}} key={flat.ID}>
+                                    <div className="plans__slide">
+                                        <div className="plans__slide_title">{kvTitle(flat.rooms)}</div>
+                                        <div className="plans__slide_img"><img src={process.env.REACT_APP_PLANS_URL + flat.photo} alt="..."/></div>
+                                        <div className="plans__slide_info">
+                                            <div className="plans__slide_area">Общая площадь: <span>{flat.total_area} м<sup>2</sup></span></div>
+                                            <a className="btn_border" href="/" onClick={(e) => { e.preventDefault(); setPopupFlat(flat); setModalState(true)}}>Подробнее</a>
+                                        </div>
+                                    </div>
+                                </SwiperSlide>
+                            }
+                            return ""
+                        })
+                        }
+                    </Swiper>
                 </div>
-                <ul class="plans__nav">
-                    <li>Все</li>
-                    <li>1-ком</li>
-                    <li class="act">2-ком</li>
-                    <li>3-ком</li>
-                </ul>
-            </div>
-        </section>
+                <div className="slider_nav">
+                    <div className="swiper-button-prev" ref={navigationPrevRef}>
+                        <img src="img/slider_plan_l.png" alt="..." />
+                        <img src="img/slider_plan_l_act.png" alt="..." />
+                    </div>
+                    <div className="swiper-pagination" ref={paginationRef}></div>
+                    <div className="swiper-button-next" ref={navigationNextRef}>
+                        <img src="img/slider_plan_r.png" alt="..." />
+                        <img src="img/slider_plan_r_act.png" alt="..." />
+                    </div>
+                </div>
+            </section>
+        {isOpen?<ModalC 
+            title={"Запишитесь <br><span>на экскурсию</span>"}
+            flat={flatPopup}
+            fields={[
+                {
+                    type:"text",
+                    name: "name",
+                    placeholder: "Ваше имя",
+                    required: false,
+                    icon: "img/in_name.png",
+                },
+                {
+                    type:"text",
+                    name: "phone",
+                    placeholder: "Ваш телефон",
+                    required: true,
+                    icon: "img/in_phone.png",
+                }, 
+            ]}
+            btnTitle={"Узнать стоимость"}
+            celtype={"getFlatCoast"}
+            close = {()=>{setModalState(false)}}
+        />:<div></div>}
+        </React.Fragment>
     )
 }
 
 export default Plans
-
-{/*<section className="flat">
-            <div id="page2" className="tm tt">
-                <b>Выберите квартиру</b> по <br />нужным параметрам
-            </div>
-            <div className="flat__nav">
-                <div className="flat__nav_item">
-                    <div className="flat__nav_name">Количество комнат</div>
-                    <div className="flat__nav_btn">
-                        <div className={type == "all" ? "act" : ""} onClick={() => typeClick("all")}>Все</div>
-                        <div className={type == "0" ? "act" : ""} onClick={() => typeClick("0")}>Студии</div>
-                        <div className={type == "1" ? "act" : ""} onClick={() => typeClick("1")}>1</div>
-                        <div className={type == "2" ? "act" : ""} onClick={() => typeClick("2")}>2</div>
-                        <div className={type == "3" ? "act" : ""} onClick={() => typeClick("3")}>3</div>
-                    </div>
-                </div>
-                <div className="flat__nav_item">
-                    <div className="flat__nav_name">Этаж</div>
-                    <div id="slid__etaj" className="slid"></div>
-                    <Slider className="slid_style_react"
-                        //defaultValue={floor}
-                        value={floors}
-                        step={1}
-                        min={2}
-                        max={17}
-                        onChange={handleChange}
-                        valueLabelDisplay="on"
-                    />
-                </div>
-                <div className="flat__nav_item">
-                    <div className="flat__nav_name">Площадь</div>
-                    <div id="slid__area" className="slid"></div>
-                    <Slider className="slid_style_react"
-                        //defaultValue={floor}
-                        value={area}
-                        step={1}
-                        min={18}
-                        max={86}
-                        onChange={handleChangeArea}
-                        valueLabelDisplay="on"
-                    />
-                </div>
-            </div>
-            <ul className="benefit__list">
-                {filteredFlats.map((flat) => <li>
-                    <div className="benefit__item">
-                        <a className="benefit__img" onClick={flatClick} id={flat.ID} href="#"><img alt="..." src={process.env.REACT_APP_PLANS_URL+ flat.photo} /></a>
-                        <div className="benefit__title">
-                            {kvTitle(flat.rooms)} {flat.total_area} м²
-                        </div>
-                        <a className="benefit__btn" onClick={flatClick} id={flat.ID} href="#">Узнать стоимость</a>
-                    </div>
-                </li>
-                )}
-            </ul>
-            {!hideMore ? <div className="benefit__list_btn">
-                <div onClick={moreClick} className="btn_white">Показать еще</div>
-            </div> : ""}
-        </section>*/}

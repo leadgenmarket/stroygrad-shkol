@@ -1,13 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
-import Slider from "react-slick"
-import "./css/slick.min.css"
-import "./css/slick-theme.min.css"
 
 
 
 
 
-export const Hod_str = () => {
+export const HodStr = () => {
     const slider = useRef(null);
     const [hod_a, setHod_a] = useState(null);
     const [active, setActive] = useState({
@@ -18,29 +15,8 @@ export const Hod_str = () => {
     const [photos, setPhotos] = useState([])
 
 
-    var settings = {
-        dots: false,
-        infinite: true,
-        speed: 300,
-        variableWidth: true,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        // responsive: [
-        //     {
-        //         breakpoint: 1150,
-        //         settings: {
-        //             slidesToShow: 1,
-        //             slidesToScroll: 1,
-        //             variableWidth: false,
-        //         }
-        //     }
-        // ],
-        // draggable: false,
-    };
-
-
     useEffect(() => {
-        const headers = { 'Content-Type': 'application/json' }
+        /*const headers = { 'Content-Type': 'application/json' }
         fetch(process.env.REACT_APP_BACKEND_URL + "/hod_react.php", headers)
             .then(res => res.json())
             .then((result) => {
@@ -58,7 +34,7 @@ export const Hod_str = () => {
                 })
 
                 setPhotos(photos)
-            })
+            })*/
 
     }, [])
 
@@ -130,7 +106,28 @@ export const Hod_str = () => {
 
 
     return (
-        <section className="deal">
+        <section class="wmain">
+	    	<div class="hod_l">
+	    		<div class="tm">Ход строительства</div>
+	    		<div class="hod_info">
+	    			Жилой комплекс строится по ФЗ 214 с использованием проектного финансирвоания и эксроу-счетов. Со всей документацией по объекту вы можете ознакомиться на сайте Единой информационной системы жилищного строительства <a target="_blank" href="https://xn--80az8a.xn--d1aqf.xn--p1ai/">наш.дом.рф</a>
+	    		</div>
+	    	</div>
+	    	<div class="hod_r">
+	    		<div class="hod_slider_main">
+	    			<div class="hod_slider swiper-container"></div>
+                </div>
+            </div>
+        </section>
+        
+    )
+}
+
+export default HodStr
+
+
+{/*
+<section className="deal">
             <div className="tm tt"><b>Надежная сделка</b></div>
             <div className="tm_dop">
                 Жилой комплекс строится по ФЗ 214 с использованием проектного финансирования <br />и эскроу счетов. Со всей документацией по объекту вы можете ознакомиться на <br />сайте Единой информационной системы жилищного строительства <a target="_blank" href="https://xn--80az8a.xn--d1aqf.xn--p1ai/">наш.дом.рф</a>
@@ -160,8 +157,7 @@ export const Hod_str = () => {
                 <div className="hod_nav_el">
                     <div className="hod_nav_l" onClick={() => { slider.current.slickPrev() }}></div>
                     <div className="hod_nav_r" onClick={() => { slider.current.slickNext() }}></div>
-                </div>*/
-            }
-        </section>
-    )
-}
+                </div>
+            </section>
+
+*/}

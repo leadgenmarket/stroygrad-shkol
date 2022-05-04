@@ -1,11 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
-
-
-
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper'
 
 
 export const HodStr = () => {
-    const slider = useRef(null);
     const [hod_a, setHod_a] = useState(null);
     const [active, setActive] = useState({
         year: null,
@@ -13,14 +11,15 @@ export const HodStr = () => {
         photos: []
     })
     const [photos, setPhotos] = useState([])
+    const navigationPrevRef = useRef(null)
+    const navigationNextRef = useRef(null)
 
 
     useEffect(() => {
-        /*const headers = { 'Content-Type': 'application/json' }
+        const headers = { 'Content-Type': 'application/json' }
         fetch(process.env.REACT_APP_BACKEND_URL + "/hod_react.php", headers)
             .then(res => res.json())
             .then((result) => {
-                console.log(result)
                 setHod_a(result)
 
                 let year = Object.keys(result.struct)[Object.keys(result.struct).length - 1]
@@ -34,11 +33,11 @@ export const HodStr = () => {
                 })
 
                 setPhotos(photos)
-            })*/
+            })
 
     }, [])
 
-    if (hod_a == null || active.year == null) {
+    if (hod_a === null || active.year === null) {
         return <div>loading</div>
     }
 
@@ -106,16 +105,65 @@ export const HodStr = () => {
 
 
     return (
-        <section class="wmain">
-	    	<div class="hod_l">
-	    		<div class="tm">Ход строительства</div>
-	    		<div class="hod_info">
-	    			Жилой комплекс строится по ФЗ 214 с использованием проектного финансирвоания и эксроу-счетов. Со всей документацией по объекту вы можете ознакомиться на сайте Единой информационной системы жилищного строительства <a target="_blank" href="https://xn--80az8a.xn--d1aqf.xn--p1ai/">наш.дом.рф</a>
-	    		</div>
-	    	</div>
-	    	<div class="hod_r">
-	    		<div class="hod_slider_main">
-	    			<div class="hod_slider swiper-container"></div>
+        <section className="hod plr">
+            <div className="wmain">
+                <div className="hod_l">
+                    <div className="tm">Ход строительства</div>
+                    <div className="hod_info">
+                        Жилой комплекс строится по ФЗ 214 с использованием проектного финансирвоания и эксроу-счетов. Со всей документацией по объекту вы можете ознакомиться на сайте Единой информационной системы жилищного строительства <a target="_blank" href="https://xn--80az8a.xn--d1aqf.xn--p1ai/">наш.дом.рф</a>
+                    </div>
+                </div>
+                <div className="hod_r">
+                    <div className="hod_slider_main">
+                        <div className='hod_slider'>
+                        <Swiper
+                            modules={[Navigation]}
+                            spaceBetween={3}
+                            speed={200}
+                            slidesPerView={"auto"}
+                            loop={false}
+                            autoHeight={true}
+                            navigation={{
+                                prevEl: navigationPrevRef.current,
+                                nextEl: navigationNextRef.current,
+                            }}
+                            onBeforeInit={(swiper) => {
+                                swiper.params.navigation.prevEl = navigationPrevRef.current;
+                                swiper.params.navigation.nextEl = navigationNextRef.current;
+                            }}
+                        >
+                            {photos ? photos.map((photo) => {
+                                    return <SwiperSlide>
+                                        <img alt="..." src={process.env.REACT_APP_BACKEND_URL + "/" + photo} />
+                                    </SwiperSlide>
+                                }) : ""}
+                        </Swiper>
+                        <div className="swiper-button-prev" ref={navigationPrevRef}>
+							<span>
+								<img src="img/hod_slider_str_l.png" alt="..." />
+								<img src="img/hod_slider_str_l_act.png" alt="..." />
+							</span>
+						</div>
+						<div className="swiper-button-next" ref={navigationNextRef}>
+							<span>
+								<img src="img/hod_slider_str_r.png" alt="..." />
+								<img src="img/hod_slider_str_r_act.png" alt="..." />
+							</span>
+						</div>
+                        </div>
+                    </div>
+                    <div className="hod_nav">
+                        <div className="hod_year">
+                            {Object.keys(hod_a.struct).reverse().map((year) => {
+                                return <div className={active.year === year ? "act" : ""} data={year} onClick={yearClick}>{year}</div>
+                            })}
+                        </div>
+                        <div className="hod_mounth">
+                            {Object.keys(hod_a.struct[active.year]).reverse().map((month) => {
+                                return <div href="/" onClick={monthClick} data={month} className={active.month === month ? "act" : ""}>{monthName(month)}</div>
+                            })}
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -124,40 +172,3 @@ export const HodStr = () => {
 }
 
 export default HodStr
-
-
-{/*
-<section className="deal">
-            <div className="tm tt"><b>Надежная сделка</b></div>
-            <div className="tm_dop">
-                Жилой комплекс строится по ФЗ 214 с использованием проектного финансирования <br />и эскроу счетов. Со всей документацией по объекту вы можете ознакомиться на <br />сайте Единой информационной системы жилищного строительства <a target="_blank" href="https://xn--80az8a.xn--d1aqf.xn--p1ai/">наш.дом.рф</a>
-            </div>
-            <div className="deal__nav">
-                <ul className="deal__nav_list">
-                    {Object.keys(hod_a.struct).reverse().map((year) => {
-                        return <li className={active.year == year ? "act" : ""} data={year} onClick={yearClick}>{year}</li>
-                    })}
-                </ul>
-                <ul className="deal__nav_list">
-                    {Object.keys(hod_a.struct[active.year]).reverse().map((month) => {
-                        return <li href="#" onClick={monthClick} data={month} className={active.month == month ? "act" : ""}>{monthName(month)}</li>
-                    })}
-                </ul>
-            </div>
-            <Slider ref={slider} className="deal__img" {...settings}>
-                {photos ? photos.map((photo) => {
-                    return <a href="#">
-                        <img alt="..." src={process.env.REACT_APP_BACKEND_URL + "/" + photo} />
-                    </a>
-                }) : ""}
-            </Slider>
-            {
-                /*
-                Стрелки для слайдера
-                <div className="hod_nav_el">
-                    <div className="hod_nav_l" onClick={() => { slider.current.slickPrev() }}></div>
-                    <div className="hod_nav_r" onClick={() => { slider.current.slickNext() }}></div>
-                </div>
-            </section>
-
-*/}

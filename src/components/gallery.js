@@ -20,7 +20,7 @@ const Gallery = () => {
             speed={400}
             slidesPerView={1}
             centeredSlides={true}
-            loop={false}
+            loop={true}
             autoHeight={true}
             onSlideChange={() => { swiper != undefined ? setIndex(swiper.realIndex + 1) : setIndex(sliderIndex) }}
             onSwiper={(swiper) => {console.log(swiper); swiper.slideTo(1); setSwiper(swiper)}}
@@ -37,7 +37,7 @@ const Gallery = () => {
                 swiper.params.navigation.nextEl = navigationNextRef.current;
             }}
         >
-        {Array.from(Array(8).keys()).map((key)=>{
+        {Array.from(Array(6).keys()).map((key)=>{
           return  <SwiperSlide><a className="photogall__slide" href="#"><img src={`img/photogall_img${key}.jpg`} /></a></SwiperSlide>
         })}
         

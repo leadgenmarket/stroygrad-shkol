@@ -45,7 +45,7 @@ export const Menu = () => {
                     <li><a onClick={clickMenu} href="buy">Способы покупки</a></li>
                     <li><a onClick={clickMenu} href="contact">Контакты</a></li>
                 </ul>
-                <a className="hl_phone" href="tel:88007642348"><img alt="..." src="img/head_phone.png" />8 800 764 23 48</a>
+                <a className="hl_phone" href="tel:89298416030"><img alt="..." src="img/head_phone.png" />8 (929) 841-60-30</a>
             </div>
         </section>
 

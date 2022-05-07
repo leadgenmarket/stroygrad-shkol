@@ -9,7 +9,7 @@ import Plans from "./plans";
 import HowToBuy from "./howToBuy";
 import Gallery from "./gallery";
 import GetFlat from "./get_flat";
-import HodStr from "./hod_str";
+// import HodStr from "./hod_str";
 import About from "./about";
 import { Contacts } from "./contacts";
 import Footer from "./footer";
@@ -26,7 +26,7 @@ export const Loader = () => {
         <HowToBuy />,
         <Gallery />,
         <GetFlat />,
-        <HodStr />,
+        // <HodStr />,
         <About />,
         <Contacts />,
         <Footer />

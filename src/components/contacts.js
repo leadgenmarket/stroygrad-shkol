@@ -22,14 +22,13 @@ export const Contacts = () => {
                         <li>
                             <img src="img/cont_ico1.png" />
                             <span>
-                                г. Краснодар, <br />
-                                ул. Энтузиастов, 168/1
+                                г. Ростов-на-Дону, <br />ул. Буйнакская 5
                             </span>
                         </li>
                         <li>
                             <img src="img/cont_ico2.png" />
                             <span>
-                                <a href="tel:88001234567">8 (800) 123 45 67</a>
+                                <a href="tel:89298416030">8 (929) 841-60-30</a>
                             </span>
                         </li>
                     </ul>
@@ -38,9 +37,9 @@ export const Contacts = () => {
                     <div id="map" style={{width: "100%", height: "100%"}}>
                         <YMaps>
                             <div>
-                                <Map defaultState={{ center: [45.03499674023101,39.019789697731], zoom: 14, controls: [] }} style={{ width: "100%", height: "100%", position: "absolute" }}  >
+                                <Map defaultState={{ center: [47.238171,39.7653], zoom: 14, controls: [] }} style={{ width: "100%", height: "100%", position: "absolute" }}  >
                                     <ZoomControl options={{ float: 'left' }} />
-                                    <Placemark geometry={[45.03499674023101,39.019789697731]}
+                                    <Placemark geometry={[47.238171,39.7653]}
                                         options={{
                                             iconLayout: 'default#image',
                                             hideIconOnBalloonOpen: false,

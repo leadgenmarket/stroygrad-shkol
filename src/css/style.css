@@ -68,6 +68,10 @@ img, a, input, textarea, select, button {
 button::-moz-focus-inner {
   border: 0;
 }
+
+.modal-open {
+    overflow: hidden;
+}
     
 input {
     box-shadow: none;
@@ -121,7 +125,7 @@ input {
         height: 246px;
         left: 0;
         bottom: 0;
-        background: url("../img/head_oblaka_bottom.png") no-repeat center bottom;
+        background: url("../img/head_oblaka_bottom.png") repeat-x center bottom;
     }
 
     .header .wmain {
@@ -351,7 +355,20 @@ input {
 
 .service__list_item {
     position: relative;
+    position: relative;
 }
+
+    .service__list_item:before {
+        content: "";
+        display: block;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        /* background-color: #f5f5f5; */
+        /* opacity: 0.5; */
+    }
 
 .service__list_item + .service__list_item {
     margin-top: 8px;
@@ -687,11 +704,18 @@ input {
     }
 
 .plans__slide {
+    cursor: pointer;
     background: #FFF;
     padding: 39px 23px 18px 23px;
     -webkit-box-shadow: 0px 0px 101px rgba(29,135,215,0.14);
             box-shadow: 0px 0px 101px rgba(29,135,215,0.14);
+    transition: 0.3s;
 }
+
+    .plans__slide:hover {
+        -webkit-box-shadow: 0px 0px 101px rgba(29,135,215,0.4);
+                box-shadow: 0px 0px 101px rgba(29,135,215,0.4);
+    }
 
 .plans__slide_title {
     font-size: 20px;

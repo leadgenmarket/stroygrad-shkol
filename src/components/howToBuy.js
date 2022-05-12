@@ -93,7 +93,7 @@ export const HowToBuy = () => {
                   position={window.pageYOffset}
                   fields={modalFields}
                   btnTitle={"получить расчет"}
-                  celtype={"getExcursion"}
+                  celtype={"getIpoteka"}
                   hidden={"Получить консультацию по ипотеке"}
                   close = {()=>{setModalType(-1)}}
                 />,

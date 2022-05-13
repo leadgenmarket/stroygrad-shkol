@@ -31,7 +31,7 @@ const Location = () => {
 	    		</li>
 	    		<li>
 	    			<i><img alt="..." src="img/location_ico6.png" /></i>
-	    			<span>Продуктовые <br />магизины, аптеки</span>
+	    			<span>Продуктовые <br />магазины, аптеки</span>
 	    		</li>
 	    	</ul>
 	    </div>

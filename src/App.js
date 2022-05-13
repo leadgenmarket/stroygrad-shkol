@@ -1,5 +1,5 @@
-// import "./css/style.css";
-// import "./css/swiper.css"
+import "./css/style.css";
+import "./css/swiper.css"
 import { BlocksContext } from "./context/blocksContext"
 import { useBlocks } from "./hooks/blocks.hook"
 

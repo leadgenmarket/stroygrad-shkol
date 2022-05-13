@@ -165,8 +165,8 @@ input {
         content: "";
         display: block;
         position: absolute;
-        width: 572px;
-        height: 205px;
+        width: 892px;
+        height: 100%;
         background: rgba(29,135,215,0.95);
     }
 
@@ -253,6 +253,11 @@ input {
         margin-top: -40px;
     }
 
+.head_plashka {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
 .head_plashka__inner h1 {
     display: block;
     margin: 0;
@@ -271,6 +276,15 @@ input {
     font-size: 20px;
     line-height: 120%;
     color: #96D2FF;
+}
+
+.head_plashka__inner span b {
+    font-weight: bold;
+    color: #fff;
+    font-size: 130%;
+    line-height: 120%;
+    padding-top: 8px;
+    display: block;
 }
 
 .head_plashka__inner h1 + span {

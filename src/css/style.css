@@ -2069,8 +2069,8 @@ input {
         font-size: 74px;
     }
     .head_plashka:before {
-        width: 492px;
-        height: 180px;
+        width: 752px;
+        height: 100% !important;
     }
     .service__list_name {
         left: 36px;
@@ -2349,8 +2349,11 @@ input {
         padding-bottom: 2px;
     }
     .head_plashka:before {
-        width: 402px;
-        height: 160px;
+        width: 100%;
+    }
+    .head_plashka {
+        padding-left: 20px;
+        padding-right: 20px;
     }
     .about__decor {
         display: none;
@@ -2595,10 +2598,6 @@ input {
     .head_plashka__inner h1 {
         font-size: 46px;
     }
-    .head_plashka:before {
-        width: 332px;
-        height: 134px;
-    }
     .head_plashka__inner span {
         font-size: 18px;
     }
@@ -2807,8 +2806,13 @@ input {
     .head_plashka__inner h1 {
         font-size: 9.7vw;
     }
+    .head_plashka {
+        padding-left: 0;
+        padding-right: 0;
+        width: 100%;
+    }
     .head_plashka:before {
-        width: 76vw;
+        width: 100%;
     }
     .excursion__img {
         display: none;

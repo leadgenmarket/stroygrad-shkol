@@ -9,27 +9,27 @@ export const Services = () => {
 	    		<li>
 	    			<div className="service__list_item">
 	    				<div className="service__list_name">
-	    					Витражное <br />остекление лоджий
+	    					<span>Витражное <br />остекление лоджий</span>
 	    				</div>
 	    				<img alt="..." src="img/service_list_img1.jpg" />
 	    			</div>
 	    			<div className="service__list_item">
 	    				<div className="service__list_name">
-	    					Видеонаблюдение
+	    					<span>Видеонаблюдение</span>
 	    				</div>
 	    				<img alt="..." src="img/service_list_img2.jpg" />
 	    			</div>
 	    		</li>
 	    		<li>
-	    			<div className="service__list_item">
+				<div className="service__list_item">
 	    				<div className="service__list_name">
-	    					Эргономичные <br />планировки квартир
+	    					<span>Детские спортивные <br />площадки</span>
 	    				</div>
-	    				<img alt="..." src="img/service_list_img3.jpg" />
+	    				<img alt="..." src="img/service_list_img6.jpg" />
 	    			</div>
 	    			<div className="service__list_item">
 	    				<div className="service__list_name">
-	    					Скоростные лифты
+	    					<span>Скоростные лифты</span>
 	    				</div>
 	    				<img alt="..." src="img/service_list_img4.jpg" />
 	    			</div>
@@ -37,15 +37,15 @@ export const Services = () => {
 	    		<li>
 	    			<div className="service__list_item">
 	    				<div className="service__list_name">
-	    					Собственный паркинг
+	    					<span>Собственный паркинг</span>
 	    				</div>
 	    				<img alt="..." src="img/service_list_img5.jpg" />
 	    			</div>
-	    			<div className="service__list_item">
+					<div className="service__list_item">
 	    				<div className="service__list_name">
-	    					Детские <br />спортивные <br />площадки
+	    					<span>Эргономичные <br />планировки квартир</span>
 	    				</div>
-	    				<img alt="..." src="img/service_list_img6.jpg" />
+	    				<img alt="..." src="img/service_list_img3.jpg" />
 	    			</div>
 	    		</li>
 	    	</ul>
